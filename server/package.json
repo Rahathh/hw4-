@@ -1,22 +1,14 @@
 {
-  "name": "server",
-  "type": "module",
+  "name": "hw4-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^17.4.2",
-    "express": "^5.1.0",
-    "mongoose": "^8.18.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "mongoose": "^8.0.0"
   }
 }
