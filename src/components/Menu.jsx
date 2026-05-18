@@ -42,7 +42,7 @@ export default function Menu({ onAddToCart }) {
 
   return (
     <section id="menu">
-      <h2>HELLO TEST</h2>
+      <h2>Our Menu</h2>
 
       <div className="menu-tabs">
         {tabs.map((tab) => (
