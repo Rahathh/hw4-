@@ -36,21 +36,23 @@ export default function App() {
     setCart([])
   }
 
-  return (
-    <>
-      <Navbar />
-      <Hero />
-      <Menu onAddToCart={addToCart} />
-      <Cart
-        cart={cart}
-        onUpdateQuantity={updateQuantity}
-        onRemove={removeFromCart}
-        onClear={clearCart}
-      />
-      <Gallery />
-      <About />
-      <Contact />
-      <Footer />
-    </>
-  )
+return (
+  <>
+    <h1>RAHAT TEST PROJECT</h1>
+
+    <Navbar />
+    <Hero />
+    <Menu onAddToCart={addToCart} />
+    <Cart
+      cart={cart}
+      onUpdateQuantity={updateQuantity}
+      onRemove={removeFromCart}
+      onClear={clearCart}
+    />
+    <Gallery />
+    <About />
+    <Contact />
+    <Footer />
+  </>
+)
 }
