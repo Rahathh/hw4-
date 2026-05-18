@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central Plate Kitchen — Fine Dining</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --charcoal: #1a1a18;
+    --ember: #c8541a;
+    --gold: #d4a843;
+    --warm-gray: #8c8070;
+    --light-bg: #faf7f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(26,26,24,0.92);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-style: italic;
+    color: var(--gold); letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream); font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--ember); color: #fff !important;
+    padding: 0.5rem 1.4rem; border-radius: 2px;
+    font-weight: 600 !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none;
+  }
+  .hamburger span { width: 24px; height: 2px; background: var(--cream); transition: 0.3s; display: block; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+  /* ── HERO ── */
+  #home {
+    height: 100vh; display: flex; align-items: center;
+    background: linear-gradient(120deg, #1a1a18 55%, #2c1f10 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute; right: -2rem; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8rem, 18vw, 20rem);
+    font-weight: 900; color: rgba(212,168,67,0.06);
+    line-height: 1; user-select: none; white-space: nowrap;
+  }
+  .hero-content {
+    padding: 0 6rem; max-width: 680px; position: relative; z-index: 2;
+    animation: fadeUp 1s ease both;
+  }
+  .hero-tag {
+    display: inline-block; font-size: 0.75rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    border: 1px solid var(--gold); padding: 0.3rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.05; color: var(--cream); margin-bottom: 1.5rem;
+  }
+  h1 em { color: var(--ember); font-style: italic; }
+  .hero-desc {
+    color: var(--warm-gray); line-height: 1.8; font-size: 1.05rem;
+    margin-bottom: 2.5rem; max-width: 480px;
+  }
+  .btn-group { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ember); color: #fff;
+    padding: 0.9rem 2.2rem; font-size: 0.85rem;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #a8401a; transform: translateY(-2px); }
+  .btn-outline {
+    border: 1px solid rgba(245,240,232,0.4); color: var(--cream);
+    padding: 0.9rem 2.2rem; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: var(--warm-gray); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 50px; background: linear-gradient(var(--gold), transparent);
+    animation: scrollLine 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100%{opacity:1;transform:scaleY(1)} 50%{opacity:0.4;transform:scaleY(0.5)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ember); margin-bottom: 0.6rem; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+  .section-sub { color: var(--warm-gray); line-height: 1.8; max-width: 560px; }
+  .divider {
+    width: 40px; height: 2px; background: var(--gold); margin: 1.5rem 0 3rem;
+  }
+
+  /* ── MENU ── */
+  #menu { background: var(--charcoal); color: var(--cream); }
+  #menu .section-title { color: var(--cream); }
+  #menu .section-sub { color: #9a9080; }
+  .menu-tabs {
+    display: flex; gap: 0; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .tab-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--warm-gray); font-family: 'Jost', sans-serif;
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.8rem 1.8rem; position: relative; transition: color 0.2s;
+  }
+  .tab-btn.active { color: var(--gold); }
+  .tab-btn.active::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px;
+    background: var(--gold);
+  }
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5px; background: rgba(255,255,255,0.05);
+  }
+  .menu-card {
+    background: #22221f; padding: 2rem; transition: background 0.2s;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .menu-card:hover { background: #2a2a26; }
+  .menu-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .menu-item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; color: var(--cream); line-height: 1.3; max-width: 70%;
+  }
+  .menu-item-price { color: var(--gold); font-weight: 600; font-size: 1rem; white-space: nowrap; }
+  .menu-item-desc { color: #7a7060; font-size: 0.88rem; line-height: 1.6; }
+  .menu-item-tag {
+    display: inline-block; font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ember);
+    border: 1px solid var(--ember); padding: 0.15rem 0.6rem; align-self: flex-start;
+    margin-top: 0.3rem;
+  }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+
+  .menu-card-actions {
+    display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-top:0.8rem;
+  }
+  .add-cart-btn {
+    background: var(--ember); color:#fff; border:none; cursor:pointer;
+    padding:0.7rem 1rem; font-family:'Jost',sans-serif; font-size:0.75rem;
+    font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
+    transition:background 0.2s, transform 0.2s;
+  }
+  .add-cart-btn:hover { background:#a8401a; transform:translateY(-2px); }
+  .cart-pill {
+    color: var(--gold); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase;
+  }
+
+  /* ── CART ── */
+  #cart { background:#fff; }
+  .cart-layout {
+    display:grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap:2rem; align-items:start;
+  }
+  .cart-box, .cart-summary {
+    background:#fff; border:1px solid rgba(26,26,24,0.08); padding:1.5rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.04);
+  }
+  .cart-items { display:flex; flex-direction:column; gap:1rem; }
+  .cart-empty {
+    color:var(--warm-gray); line-height:1.7; padding:1.5rem; background:var(--light-bg);
+    border:1px dashed rgba(26,26,24,0.15);
+  }
+  .cart-item {
+    display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:1rem; align-items:center;
+    padding:1rem 0; border-bottom:1px solid rgba(26,26,24,0.08);
+  }
+  .cart-item:last-child { border-bottom:none; }
+  .cart-item-name { font-family:'Playfair Display',serif; font-size:1.05rem; margin-bottom:0.2rem; }
+  .cart-item-meta { color:var(--warm-gray); font-size:0.9rem; }
+  .qty-controls { display:flex; align-items:center; gap:0.5rem; }
+  .qty-btn {
+    width:32px; height:32px; border:1px solid rgba(26,26,24,0.15); background:#fff; cursor:pointer;
+    font-size:1rem;
+  }
+  .remove-btn, .clear-cart-btn {
+    background:none; border:1px solid rgba(200,84,26,0.3); color:var(--ember); cursor:pointer;
+    padding:0.65rem 1rem; font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .remove-btn:hover, .clear-cart-btn:hover { background:var(--ember); color:#fff; }
+  .cart-summary-row {
+    display:flex; justify-content:space-between; align-items:center; padding:0.85rem 0;
+    border-bottom:1px solid rgba(26,26,24,0.08);
+  }
+  .cart-summary-row:last-of-type { border-bottom:none; }
+  .cart-total-price {
+    font-family:'Playfair Display',serif; font-size:2rem; color:var(--charcoal); margin-top:1rem;
+  }
+  .cart-count-badge {
+    display:inline-flex; align-items:center; justify-content:center; min-width:24px; height:24px;
+    padding:0 0.45rem; border-radius:999px; background:var(--ember); color:#fff; font-size:0.78rem;
+    margin-left:0.5rem;
+  }
+
+  /* ── GALLERY ── */
+  #gallery { background: var(--light-bg); }
+  .slider-wrap { position: relative; overflow: hidden; border-radius: 0; }
+  .slider-track {
+    display: flex; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .slide {
+    min-width: 100%; height: 500px; position: relative; overflow: hidden;
+    background: var(--charcoal); display: flex; align-items: center; justify-content: center;
+  }
+  .slide-inner {
+    width: 100%; height: 100%; display: flex;
+  }
+  .slide-bg {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+    position: relative; overflow: hidden;
+  }
+  .slide-caption {
+    width: 280px; background: var(--charcoal); color: var(--cream);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 3rem 2.5rem;
+    flex-shrink: 0;
+  }
+  .slide-caption h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:0.5rem; }
+  .slide-caption p { color:#7a7060; font-size:0.9rem; line-height:1.6; }
+  .slide-num { font-size: 0.7rem; color: var(--ember); letter-spacing: 0.15em; margin-bottom: 0.8rem; }
+
+  /* Gradient overlay per slide */
+  .slide-bg::before {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    opacity: 0.85;
+  }
+  .slide-emoji { position: relative; z-index: 1; filter: drop-shadow(0 0 40px rgba(0,0,0,0.6)); }
+
+  .slider-controls { display:flex; align-items:center; gap:1.5rem; margin-top:2rem; }
+  .slider-btn {
+    width:48px; height:48px; background:none; border:1px solid #ccc;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; transition: border-color 0.2s, background 0.2s; color:var(--charcoal);
+  }
+  .slider-btn:hover { border-color:var(--ember); background:var(--ember); color:#fff; }
+  .slider-dots { display:flex; gap:0.5rem; }
+  .dot {
+    width:8px; height:8px; background:#ccc; border-radius:50%;
+    cursor:pointer; transition:background 0.2s, transform 0.2s;
+  }
+  .dot.active { background:var(--ember); transform:scale(1.3); }
+
+  /* ── ABOUT ── */
+  #about { background: #fff; }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+  .about-visual {
+    background: linear-gradient(135deg, #2c1f10, #1a1a18);
+    height: 500px; display:flex; align-items:center; justify-content:center;
+    position: relative; overflow: hidden;
+  }
+  .about-visual::after {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at center, rgba(200,84,26,0.3) 0%, transparent 70%);
+  }
+  .about-big-icon { font-size: 10rem; z-index:1; position:relative; }
+  .about-visual-label {
+    position:absolute; bottom:0; left:0; right:0; padding:2rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    z-index:2;
+  }
+  .about-visual-label h4 {
+    font-family:'Playfair Display',serif; color:var(--cream); font-size:1.2rem;
+  }
+  .about-visual-label p { color:#9a9080; font-size:0.85rem; margin-top:0.3rem; }
+  .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
+  .stat { border-left:2px solid var(--gold); padding-left:1.2rem; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--charcoal); }
+  .stat-label { font-size:0.78rem; color:var(--warm-gray); letter-spacing:0.1em; text-transform:uppercase; margin-top:0.2rem; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--charcoal); color: var(--cream); }
+  #contact .section-title { color: var(--cream); }
+  #contact .section-sub { color: #9a9080; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .map-placeholder {
+    background: #2a2a26; height: 360px; display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.06);
+  }
+  .map-placeholder iframe { width:100%; height:100%; border:none; filter:grayscale(80%) invert(0.8); }
+  .map-placeholder .map-pin { font-size:3rem; position:relative; z-index:2; }
+  .map-label {
+    position:absolute; bottom:1.5rem; left:50%; transform:translateX(-50%);
+    background:rgba(26,26,24,0.95); color:var(--cream); padding:0.6rem 1.4rem;
+    font-size:0.8rem; white-space:nowrap; letter-spacing:0.05em;
+  }
+  .contact-form { display:flex; flex-direction:column; gap:1.2rem; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .form-group { display:flex; flex-direction:column; gap:0.5rem; }
+  .form-group label { font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--warm-gray); }
+  .form-group input, .form-group textarea {
+    background: #2a2a26; border: 1px solid rgba(255,255,255,0.08);
+    color: var(--cream); padding: 0.85rem 1rem; font-family:'Jost',sans-serif;
+    font-size:0.95rem; outline:none; transition:border-color 0.2s; resize:none;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color:var(--gold); }
+  .form-group textarea { height:140px; }
+  .btn-submit {
+    background: var(--ember); color:#fff; border:none; cursor:pointer;
+    padding:1rem 2.5rem; font-family:'Jost',sans-serif; font-size:0.85rem;
+    font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+    align-self:flex-start; transition:background 0.25s, transform 0.2s;
+  }
+  .btn-submit:hover { background:#a8401a; transform:translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111110; color: #7a7060; padding: 4rem;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand .logo { display:block; margin-bottom:1rem; }
+  .footer-brand p { font-size:0.88rem; line-height:1.8; max-width:260px; }
+  .footer-heading {
+    font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--cream); margin-bottom:1.2rem;
+  }
+  .footer-links { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+  .footer-links a { color:#7a7060; text-decoration:none; font-size:0.88rem; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--gold); }
+  .social-links { display:flex; gap:0.8rem; flex-wrap:wrap; }
+  .social-link {
+    width:38px; height:38px; background:#1e1e1c; border:1px solid rgba(255,255,255,0.08);
+    display:flex; align-items:center; justify-content:center;
+    color:#7a7060; text-decoration:none; font-size:0.9rem;
+    transition:border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .social-link:hover { border-color:var(--ember); color:var(--ember); background:#2a1208; }
+  .hours-row { display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.4rem; }
+  .hours-day { color:#9a9080; }
+  .hours-time { color:var(--cream); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06); padding-top:2rem;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+    font-size:0.8rem;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    .nav-links { display: none; position:fixed; top:0; left:0; right:0; bottom:0;
+      background:rgba(26,26,24,0.98); flex-direction:column; align-items:center;
+      justify-content:center; gap:2.5rem; z-index:999;
+    }
+    .nav-links.open { display:flex; }
+    .nav-links a { font-size:1.2rem; }
+    .hamburger { display:flex; z-index:1000; }
+    .hero-content { padding: 0 2rem; }
+    section { padding: 4rem 2rem; }
+    .about-grid, .contact-grid, .cart-layout { grid-template-columns:1fr; gap:3rem; }
+    .footer-grid { grid-template-columns:1fr 1fr; gap:2rem; }
+    .slide { height: 380px; }
+    .slide-caption { width: 200px; padding: 2rem 1.5rem; }
+    .form-row { grid-template-columns:1fr; }
+    .cart-item { grid-template-columns:1fr; }
+    .menu-tabs { overflow-x:auto; }
+  }
+  @media(max-width: 600px) {
+    h1 { font-size: 2.5rem; }
+    .hero-content { padding: 0 1.5rem; }
+    section { padding: 3rem 1.5rem; }
+    .slide { height: 300px; flex-direction:column; }
+    .slide-inner { flex-direction:column; }
+    .slide-caption { width:100%; padding: 1.5rem; }
+    .slide-bg { height: 180px; font-size: 4rem; }
+    footer { padding: 3rem 1.5rem; }
+    .footer-grid { grid-template-columns:1fr; }
+    .footer-bottom { flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="logo">Central Plate Kitchen</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#cart">Cart</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg-text">CPK</div>
+  <div class="hero-content">
+    <span class="hero-tag">Est. 2008 · New York</span>
+    <h1>Where Every<br><em>Plate</em> Tells a Story</h1>
+    <p class="hero-desc">Central Plate Kitchen is a neighborhood dining experience rooted in seasonal ingredients, crafted by chefs who believe every meal should tell a story.</p>
+    <div class="btn-group">
+      <a href="#menu" class="btn-primary">Explore Menu</a>
+      <a href="#contact" class="btn-outline">Reserve a Table</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <span class="section-label">What We Serve</span>
+  <h2 class="section-title">Our Menu</h2>
+  <p class="section-sub">Every dish is crafted to order using locally sourced, seasonal ingredients.</p>
+  <div class="divider"></div>
+
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="switchTab('starters')">Starters</button>
+    <button class="tab-btn" onclick="switchTab('mains')">Mains</button>
+    <button class="tab-btn" onclick="switchTab('desserts')">Desserts</button>
+    <button class="tab-btn" onclick="switchTab('drinks')">Drinks</button>
+  </div>
+
+  <div id="starters" class="menu-panel active">
+    <div class="menu-grid">
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Burrata & Heirloom Tomato</span><span class="menu-item-price">$16</span></div><p class="menu-item-desc">Fresh burrata with slow-roasted heirloom tomatoes, basil oil, and sea salt flakes.</p><span class="menu-item-tag">Vegetarian</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Fast Pickup</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">House-Smoked Salmon Crudo</span><span class="menu-item-price">$22</span></div><p class="menu-item-desc">Cold-smoked salmon with cucumber ribbon, dill crème fraîche, and capers.</p><span class="menu-item-tag">Chef's Pick</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Top Seller</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Wild Mushroom Crostini</span><span class="menu-item-price">$14</span></div><p class="menu-item-desc">Seasonal forest mushrooms on toasted sourdough with truffle oil and aged parmesan.</p><span class="menu-item-tag">Vegetarian</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Fast Pickup</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Charred Octopus</span><span class="menu-item-price">$24</span></div><p class="menu-item-desc">Slow-braised then wood-grilled octopus with chimichurri, pickled onion, and smoked paprika.</p><span class="menu-item-tag">Seasonal</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Limited Run</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Bone Broth Soup</span><span class="menu-item-price">$12</span></div><p class="menu-item-desc">Rich 48-hour slow-cooked bone broth with gremolata and herb oil.</p><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Chef Crafted</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Roasted Beet Salad</span><span class="menu-item-price">$15</span></div><p class="menu-item-desc">Red & golden beets with arugula, candied walnuts, goat cheese, and champagne vinaigrette.</p><span class="menu-item-tag">Gluten Free</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Fresh Daily</span></div></div>
+    </div>
+  </div>
+
+  <div id="mains" class="menu-panel">
+    <div class="menu-grid">
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">48oz Tomahawk Steak</span><span class="menu-item-price">$145</span></div><p class="menu-item-desc">USDA Prime, 21-day dry-aged. Served with roasted bone marrow and herb butter.</p><span class="menu-item-tag">Signature</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">House Favorite</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Slow-Roasted Duck</span><span class="menu-item-price">$52</span></div><p class="menu-item-desc">Half duck slow-cooked over embers with cherry gastrique and celeriac purée.</p><span class="menu-item-tag">Chef's Pick</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Top Seller</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Wild Sea Bass</span><span class="menu-item-price">$48</span></div><p class="menu-item-desc">Pan-seared with saffron beurre blanc, fennel confit, and crispy capers.</p><span class="menu-item-tag">Gluten Free</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Fresh Daily</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Heritage Pork Chop</span><span class="menu-item-price">$44</span></div><p class="menu-item-desc">Brined and wood-grilled with apple mostarda and roasted fingerling potatoes.</p><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Slow Simmered</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Truffle Risotto</span><span class="menu-item-price">$38</span></div><p class="menu-item-desc">Arborio rice with black truffle shavings, aged parmesan, and chive oil.</p><span class="menu-item-tag">Vegetarian</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Fast Pickup</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Wood-Fired Lamb Rack</span><span class="menu-item-price">$68</span></div><p class="menu-item-desc">Herb-crusted Colorado lamb with roasted garlic jus and spring pea purée.</p><span class="menu-item-tag">Seasonal</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Limited Run</span></div></div>
+    </div>
+  </div>
+
+  <div id="desserts" class="menu-panel">
+    <div class="menu-grid">
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Valrhona Chocolate Fondant</span><span class="menu-item-price">$16</span></div><p class="menu-item-desc">Warm dark chocolate cake with molten center, vanilla bean ice cream, and praline.</p><span class="menu-item-tag">Signature</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">House Favorite</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Lemon Posset</span><span class="menu-item-price">$13</span></div><p class="menu-item-desc">Set cream with Meyer lemon, shortbread crumble, and fresh raspberries.</p><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Citrus Finish</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Seasonal Sorbet</span><span class="menu-item-price">$10</span></div><p class="menu-item-desc">Three scoops of rotating house-made sorbets. Ask your server for today's flavors.</p><span class="menu-item-tag">Vegan</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Plant Based</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Cheese Board</span><span class="menu-item-price">$24</span></div><p class="menu-item-desc">Selection of three artisan cheeses with quince paste, honeycomb, and crackers.</p><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Cheese Pairing</span></div></div>
+    </div>
+  </div>
+
+  <div id="drinks" class="menu-panel">
+    <div class="menu-grid">
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Central Old Fashioned</span><span class="menu-item-price">$18</span></div><p class="menu-item-desc">Smoked bourbon, demerara, house bitters, and expressed orange peel.</p><span class="menu-item-tag">Signature</span><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">House Favorite</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Garden & Elderflower Spritz</span><span class="menu-item-price">$15</span></div><p class="menu-item-desc">Gin, elderflower liqueur, cucumber, and prosecco.</p><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Garden Fresh</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">Sommelier's Wine Selection</span><span class="menu-item-price">from $14</span></div><p class="menu-item-desc">Rotating curated glass pours. Ask for our current selection by the glass or bottle.</p><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Cellar Pick</span></div></div>
+      <div class="menu-card"><div class="menu-card-top"><span class="menu-item-name">House Mocktails</span><span class="menu-item-price">$10</span></div><p class="menu-item-desc">Seasonal non-alcoholic craft cocktails made with house-pressed juices and botanicals.</p><div class="menu-card-actions"><button class="add-cart-btn" onclick="addToCart(this)">Add to Cart</button><span class="cart-pill">Zero Proof</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CART -->
+<section id="cart">
+  <span class="section-label">Your Order</span>
+  <h2 class="section-title">Shopping Cart <span class="cart-count-badge" id="cartCountBadge">0</span></h2>
+  <p class="section-sub">Review your selected items, update quantities, remove dishes, or clear the cart anytime.</p>
+  <div class="divider"></div>
+
+  <div class="cart-layout">
+    <div class="cart-box">
+      <div id="cartItems" class="cart-items"></div>
+    </div>
+
+    <div class="cart-summary">
+      <span class="section-label" style="margin-bottom:0.8rem;">Summary</span>
+      <div class="cart-summary-row"><span>Items</span><strong id="cartItemCount">0</strong></div>
+      <div class="cart-summary-row"><span>Estimated Total</span><strong id="cartTotalInline">$0.00</strong></div>
+      <div class="cart-total-price" id="cartTotal">$0.00</div>
+      <button class="clear-cart-btn" style="margin-top:1.2rem;" onclick="clearCart()">Clear Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <span class="section-label">A Visual Feast</span>
+  <h2 class="section-title">Gallery</h2>
+  <p class="section-sub">A glimpse into the warmth, craft, and artistry that defines every visit to Central Plate Kitchen.</p>
+  <div class="divider"></div>
+
+  <div class="slider-wrap">
+    <div class="slider-track" id="sliderTrack">
+
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bg" style="--c1:#3d1f0a;--c2:#8c3a10;">
+            <img src="steak.jpg" style="width: 50%; height: auto;object-fit: cover;">
+          </div>
+          <div class="slide-caption">
+            <p class="slide-num">01 / 06</p>
+            <h3>The Tomahawk</h3>
+            <p>Our 48oz dry-aged masterpiece, finished over an open hardwood fire.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bg" style="--c1:#1a2a1a;--c2:#2d4a2d;">
+            <img src="veggies.jpg" style="width: 50%; height: auto;object-fit: cover;">
+          </div>
+          <div class="slide-caption">
+            <p class="slide-num">02 / 06</p>
+            <h3>Garden Fresh</h3>
+            <p>Seasonal produce sourced directly from our partner farms each morning.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bg" style="--c1:#2a1a30;--c2:#4a2060;">
+            <img src="wine.jpg" style="width: 50%; height: auto;object-fit: cover;">
+          </div>
+          <div class="slide-caption">
+            <p class="slide-num">03 / 06</p>
+            <h3>The Wine Cellar</h3>
+            <p>Over 300 labels curated by our resident sommelier from six continents.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bg" style="--c1:#2a1a08;--c2:#5c3a10;">
+            <img src="fire.jpg" style="width: 50%; height: auto;object-fit: cover;">
+          </div>
+          <div class="slide-caption">
+            <p class="slide-num">04 / 06</p>
+            <h3>The Open Kitchen</h3>
+            <p>Watch our chefs work the live fire — theatre and technique in harmony.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bg" style="--c1:#1a1a2a;--c2:#202038;">
+            <img src="cookie.jpg" style="width: 50%; height: auto;object-fit: cover;">
+          </div>
+          <div class="slide-caption">
+            <p class="slide-num">05 / 06</p>
+            <h3>Pastry Lab</h3>
+            <p>Desserts built daily from scratch — each one a small work of art.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bg" style="--c1:#0f1a14;--c2:#1a3020;">
+            <img src="tables.jpg" style="width: 50%; height: auto;object-fit: cover;">
+          </div>
+          <div class="slide-caption">
+            <p class="slide-num">06 / 06</p>
+            <h3>The Dining Room</h3>
+            <p>Warm walnut interiors, candlelit tables — an atmosphere built for memories.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="slider-controls">
+    <button class="slider-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+    <div class="slider-dots" id="sliderDots"></div>
+    <button class="slider-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <span class="about-big-icon">🏛️</span>
+      <div class="about-visual-label">
+        <h4>Founded in 2008</h4>
+        <p>Lower Manhattan, New York</p>
+      </div>
+    </div>
+    <div>
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">Born From Passion,<br>Built on Community</h2>
+      <div class="divider"></div>
+      <p style="color:var(--warm-gray);line-height:1.9;margin-bottom:1.2rem;">
+        Central Plate Kitchen began in 2008 when chef Marcus Webb returned from years cooking across Europe, carrying a single conviction: that great food starts with great ingredients and the people who grow them.
+      </p>
+      <p style="color:var(--warm-gray);line-height:1.9;margin-bottom:2rem;">
+        What started as a 28-seat supper club in a converted Tribeca townhouse is now one of New York's most beloved dining destinations — but our philosophy hasn't changed. We source from fewer than thirty farms. We change our menu weekly. And we still cook everything over hardwood.
+      </p>
+      <div class="about-stats">
+        <div class="stat"><div class="stat-num">16+</div><div class="stat-label">Years of Excellence</div></div>
+        <div class="stat"><div class="stat-num">30</div><div class="stat-label">Partner Farms</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">James Beard Nominations</div></div>
+        <div class="stat"><div class="stat-num">★★</div><div class="stat-label">Michelin Stars</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <span class="section-label">Find Us</span>
+  <h2 class="section-title">Get in Touch</h2>
+  <p class="section-sub">Reserve your table or send us a message — we'd love to hear from you.</p>
+  <div class="divider"></div>
+
+  <div class="contact-grid">
+    <div>
+      <div class="map-placeholder">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00425!3d40.71278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a1628cb27ef%3A0x3a8c1b7e73a58e6e!2sTribeca%2C%20New%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1680000000000!5m2!1sen!2sus"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div class="map-label">📍 142 Hudson St, Tribeca, New York</div>
+      </div>
+      <div style="margin-top:2rem;display:flex;flex-direction:column;gap:0.8rem;">
+        <p style="color:#9a9080;font-size:0.9rem;">📞 <a href="tel:+12129876543" style="color:var(--gold);text-decoration:none;">+1 (212) 987-6543</a></p>
+        <p style="color:#9a9080;font-size:0.9rem;">✉️ <a href="mailto:rh@centralplatekitchen.com" style="color:var(--gold);text-decoration:none;">rh@centralplatekitchen.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" placeholder="Your full name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Reservation request, dietary needs, private event inquiry..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="handleSubmit(event)">Send Message</button>
+      <p id="form-success" style="display:none;color:#6fcf97;font-size:0.9rem;margin-top:0.5rem;">
+        ✓ Your message has been sent. We'll be in touch within 24 hours.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Central Plate Kitchen</span>
+      <p>A neighborhood kitchen with a fine dining soul — rooted in community, craft, and the finest seasonal ingredients New York has to offer.</p>
+      <div class="social-links" style="margin-top:1.5rem;">
+        <a href="facebook.com/centralplatekitchen" class="social-link" aria-label="Facebook">f</a>
+        <a href="instagram.com/centralplatekitchen" class="social-link" aria-label="Instagram">◎</a>
+        <a href="#" class="social-link" aria-label="Twitter/X">𝕏</a>
+        <a href="#" class="social-link" aria-label="TikTok">▲</a>
+      </div>
+    </div>
+    <div>
+      <p class="footer-heading">Navigate</p>
+      <ul class="footer-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Visit</p>
+      <ul class="footer-links">
+        <li><a href="#">Private Events</a></li>
+        <li><a href="#">Gift Cards</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Hours</p>
+      <div class="hours-row"><span class="hours-day">Mon – Thu</span><span class="hours-time">5 – 10pm</span></div>
+      <div class="hours-row"><span class="hours-day">Fri – Sat</span><span class="hours-time">5 – 11pm</span></div>
+      <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">4 – 9pm</span></div>
+      <p style="margin-top:1.2rem;font-size:0.8rem;color:#555548;">Lunch service available<br>Fri – Sun · 12 – 2:30pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Central Plate Kitchen. All rights reserved.</span>
+    <span>142 Hudson St · Tribeca · New York, NY 10013</span>
+  </div>
+</footer>
+
+<script>
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  });
+});
+
+// Menu tabs
+function switchTab(name) {
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.textContent.trim().toLowerCase() === name);
+  if (activeBtn) activeBtn.classList.add('active');
+}
+
+// Shopping cart
+let cart = [];
+
+function parsePrice(priceText) {
+  const match = priceText.match(/\$([\d.]+)/);
+  return match ? Number(match[1]) : 0;
+}
+
+function addToCart(button) {
+  const card = button.closest('.menu-card');
+  const name = card.querySelector('.menu-item-name').textContent.trim();
+  const priceText = card.querySelector('.menu-item-price').textContent.trim();
+  const price = parsePrice(priceText);
+
+  const existingItem = cart.find(item => item.name === name);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ name, price, quantity: 1 });
+  }
+
+  renderCart();
+}
+
+function updateQuantity(name, change) {
+  const item = cart.find(entry => entry.name === name);
+  if (!item) return;
+  item.quantity += change;
+  if (item.quantity <= 0) {
+    cart = cart.filter(entry => entry.name !== name);
+  }
+  renderCart();
+}
+
+function removeFromCart(name) {
+  cart = cart.filter(item => item.name !== name);
+  renderCart();
+}
+
+function clearCart() {
+  cart = [];
+  renderCart();
+}
+
+function renderCart() {
+  const cartItems = document.getElementById('cartItems');
+  const cartItemCount = document.getElementById('cartItemCount');
+  const cartCountBadge = document.getElementById('cartCountBadge');
+  const cartTotal = document.getElementById('cartTotal');
+  const cartTotalInline = document.getElementById('cartTotalInline');
+
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<div class="cart-empty">Your cart is empty right now. Add dishes from the menu and they will appear here instantly.</div>';
+  } else {
+    cartItems.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div>
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-meta">$${item.price.toFixed(2)} each · Subtotal $${(item.price * item.quantity).toFixed(2)}</div>
+        </div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="updateQuantity(decodeURIComponent('${encodeURIComponent(item.name)}'), -1)">−</button>
+          <strong>${item.quantity}</strong>
+          <button class="qty-btn" onclick="updateQuantity(decodeURIComponent('${encodeURIComponent(item.name)}'), 1)">+</button>
+        </div>
+        <button class="remove-btn" onclick="removeFromCart(decodeURIComponent('${encodeURIComponent(item.name)}'))">Remove</button>
+      </div>
+    `).join('');
+  }
+
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  cartItemCount.textContent = totalItems;
+  cartCountBadge.textContent = totalItems;
+  cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
+  cartTotalInline.textContent = `$${totalPrice.toFixed(2)}`;
+}
+
+// Slider
+const track = document.getElementById('sliderTrack');
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('sliderDots');
+let current = 0;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goTo(i));
+  dotsContainer.appendChild(dot);
+});
+
+function goTo(n) {
+  current = (n + slides.length) % slides.length;
+  track.style.transform = `translateX(-${current * 100}%)`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+}
+document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+setInterval(() => goTo(current + 1), 5000);
+
+renderCart();
+
+// Contact form
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('form-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
